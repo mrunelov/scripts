@@ -1,4 +1,31 @@
-#!/bin/bash 
+#!/bin/bash
+
+#
+# A script that automatically creates playlists for VLC.
+#
+# Usage:
+#
+# pl <name-pattern> <season> <from> <to>
+#
+# The last or last three parameters are optional.
+#
+# Sample usage:
+#
+# pl thrones (Creates a playlist with the first 5 matches)
+#
+# pl "west\ wing" 3 12 (Opens West Wing season 3 episode 12)
+#
+# pl firefly 1 1 12 (Creates a playlist with Firefly episodes 1-12)
+#
+#
+# Defaults to $HOME/Downloads if season number is omitted. Otherwise, $HOME is
+# searched.
+#
+# Notes:
+#
+# # The pattern matching requires the season folder to contain the show's name.
+# The last item of the playlist is initially played when running on Mac OS X.
+# The playlist is added twice on Mac OS X.
 
 # Fetch parameters and store them in variables
 show=$1
@@ -20,7 +47,7 @@ then
 	IFS=$'\n'
 	argument_array=($(find "$HOME" -iname "$single_file_pattern.avi" -o -iname "$single_file_pattern.mp4" -o -iname "$single_file_pattern.mpg" -o -iname "$single_file_pattern.mkv" -type f 2>/dev/null | sort -d | head -5))
 	# Testing length of vlc_argument since it will have two whitespaces in it if "find" fails,
-	# So null- or empty string-checks does not work.
+	# So null or empty-string checks does not work.
 	if [ "${#argument_array[@]}" -eq 0 ] ; 
 	then
 		echo "No match found."
@@ -78,7 +105,10 @@ else
 		else
 			# Append string to prevent stdout and stderr 
 			vlc_argument="$vlc_argument > /dev/null 2> /dev/null &"
-		eval /Applications/VLC.app/Contents/MacOS/VLC "$vlc_argument"
+            # VLC Command for Mac OS X
+            eval /Applications/VLC.app/Contents/MacOS/VLC "$vlc_argument"
+            # VLC Command for GNU/Linux
+            # vlc vlc_argument &
 		fi
 fi
 
