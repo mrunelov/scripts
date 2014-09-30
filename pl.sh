@@ -13,7 +13,7 @@
 #
 # pl thrones (Creates a playlist with the first 5 matches)
 #
-# pl "west\ wing" 3 12 (Opens West Wing season 3 episode 12)
+# pl "west wing" 3 12 (Opens West Wing season 3 episode 12)
 #
 # pl firefly 1 1 12 (Creates a playlist with Firefly episodes 1-12)
 #
